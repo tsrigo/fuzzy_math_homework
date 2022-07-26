@@ -27,8 +27,6 @@
 
 [LBP特征提取原理和python库代码](https://blog.csdn.net/qq_44386182/article/details/124031615?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_v31_ecpm-2-124031615-null-null.pc_agg_new_rank&utm_term=LBP%E6%8F%90%E5%8F%96%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F%E7%9A%84%E6%AD%A5%E9%AA%A4&spm=1000.2123.3001.4430)
 
-[基于MATLAB和模糊聚类分析的图像分类](https://blog.csdn.net/weixin_43851420/article/details/106533185)
-
 [模糊动态聚类之python实现](https://blog.csdn.net/m0_37804518/article/details/78806138)
 
 [LBP特征](https://blog.csdn.net/lk3030/article/details/84034963)
@@ -44,3 +42,9 @@
 [LBP特征提取原理和python库代码_靠你几哇的博客-CSDN博客_lbp特征python](https://blog.csdn.net/qq_44386182/article/details/124031615)
 
 [模糊聚类分析方法_wamg潇潇的博客-CSDN博客_模糊聚类](https://blog.csdn.net/qq_29831163/article/details/89893908)
+
+[python代码注释-看这一篇就可以-刘刚刚的博客](https://shaoer.cloud/detail/86.html)
+
+[Python –遍历NumPy中的列 - DaisyLinux - 博客园](https://www.cnblogs.com/a00ium/p/13874932.html)
+
+[Python dict() 函数 | 菜鸟教程](https://www.runoob.com/python/python-func-dict.html)

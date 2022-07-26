@@ -88,30 +88,32 @@ def putMat(R):
         print(i)
     print()
 
+if __name__=="__main__":
+    file_dir = "D:\\Course\\XDU_Mathmatical_Modeling\\Fuzzy Mathematics\\fuzzy_mathematics_homework\\data\\3"
 
-file_dir = "D:\\Course\\XDU_Mathmatical_Modeling\\Fuzzy Mathematics\\fuzzy_mathematics_homework\\LBP\\data\\1"
+    files = get_img(file_dir)
+    feature = get_feature(files)
+                
+    n = len(feature)    # 高，Height of feature
+    m = len(feature[0]) # 宽，Width of feature
+    M = 80              # 绝对值倒数法的系数，Coefficients of the Reciprocal Absolute Value Method
 
-files = get_img(file_dir)
-feature = get_feature(files)
-            
-n = len(feature)    # 高，Height of feature
-m = len(feature[0]) # 宽，Width of feature
-M = 85              # 绝对值倒数法的系数，Coefficients of the Reciprocal Absolute Value Method
+    r = get_sMat(feature)# 相似矩阵，Similarity matrix
 
-r = get_sMat(feature)# 相似矩阵，Similarity matrix
+    print("应用绝对值倒数法，系数 M 的取值为：",M)
+    print("系数矩阵中所有 r_ij 是否均位于 [0, 1] 区间内：" + str(all([x <= 1 and x >= 0 for i in r for x in i])) + '\n')
+    assert(all([x <= 1 and x >= 0 for i in r for x in i]) == True)
 
-print("\n所有 r_ij 是否均位于 [0, 1] 区间内：" + str(all([x <= 1 and x >= 0 for i in r for x in i])) + '\n')
+    R = get_closure(r)
+    # print("模糊等价矩阵为：")
+    # putMat(R)
+    ran = get_range(R)
+    print("lambda 的取值有：" + str(ran))
 
-R = get_closure(r)
-# print("模糊等价矩阵为：")
-# putMat(R)
-ran = get_range(R)
-print("lambda 的取值有：" + str(ran))
-
-for lam in ran:
-    tMat= get_truncation_matrix(R, lam)
-    print(str(lam) + " 对应的截断矩阵为：")
-    putMat(tMat)
-    print(str(lam) + " 对应的分类为:")
-    res = get_class(tMat)
-    print(res, '\n')
+    for lam in ran:
+        tMat= get_truncation_matrix(R, lam)
+        print(str(lam) + " 对应的截断矩阵为：")
+        putMat(tMat)
+        print(str(lam) + " 对应的分类为:")
+        res = get_class(tMat)
+        putMat(res)

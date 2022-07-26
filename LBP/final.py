@@ -8,6 +8,7 @@ def get_img(file_dir):
         return [f for f in files]
 
 def get_feature(files):
+    '''获取特征矩阵'''
     feature = []        # LBPH特征值矩阵，size of feature: 10 * 3776 (sampleNum * featureNum)
 
     for f in files:
@@ -73,11 +74,11 @@ def get_class(tMat):
         if st[i] == True:
             continue;
         st[i] = True
-        oneClass = [i]
+        oneClass = [files[i]]
         for j in range(i + 1, n):
             if tMat[i] == tMat[j]:
                 st[j] = True
-                oneClass.append(j)
+                oneClass.append(files[j])
         res.append(oneClass)
     return res
 

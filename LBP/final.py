@@ -19,6 +19,15 @@ def get_closure(r):
     
     return R
 
+def get_range(R):
+    res = []
+    getRound = lambda x: round(x, 2)
+    for i in R:
+        res.extend(getRound(x) for x in i)
+    return set(res)
+
+
+
 
 dirPath = "/data/1/"
 
@@ -33,16 +42,18 @@ for root, dirs, files in os.walk(file_dir, topdown=False):
 n = len(feature)    # height of feature
 m = len(feature[0]) # width of feature
 r = np.zeros((n, n))     # similarity matrix
-M = 0.008   
+M = 85
 
 for i in range(n):     
     for j in range(n): 
         if i == j:
             r[i][j] = 1.0
         else:
-            r[i][j] = 1 / sum([abs(x - y) for x, y in zip(feature[i], feature[j])])
+            r[i][j] = M * 1 / sum([abs(x - y) for x, y in zip(feature[i], feature[j])])
 
 print("\n所有 r_ij 是否均位于 [0, 1] 区间内：" + str(all([x <= 1 and x >= 0 for i in r for x in i])) + '\n')
 
 R = get_closure(r)
-print(R)
+# print(R)
+ran = get_range(R)
+print(ran)

@@ -8,6 +8,7 @@ def get_img(file_dir):
         return [f for f in files]
 
 def get_feature(files):
+    '''获取特征矩阵'''
     feature = []        # LBPH特征值矩阵，size of feature: 10 * 3776 (sampleNum * featureNum)
 
     for f in files:

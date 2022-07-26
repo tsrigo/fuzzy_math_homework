@@ -27,27 +27,46 @@ def get_sMat(feature):
                 r[i][j] = M * 1 / sum([abs(x - y) for x, y in zip(feature[i], feature[j])])
     return r
 
+def Rmul(r):
+    '''模糊矩阵的乘法'''
+    n = len(r)
+    R = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            R[i][j] = max([min(x, y) for x, y in zip(r[i], r[:, j])])
+    return R
+
 def get_closure(r):
     '''
     返回由模糊相似矩阵得到的模糊等价矩阵(传递闭包) R
     其中R_ij = ∨{(r_ik ∧ r_kj) | 1 ≤ k ≤ n}.
     '''
     n = len(r)
-    R = np.zeros((n, n))
-
-    for i in range(n):
-        for j in range(n):
-            R[i][j] = max([min(x, y) for x, y in zip(r[i], r[:, j])])
-    
+    R = Rmul(r)
+    t = np.zeros((n, n))
+    eps = 1e-8    
+    times = 1
+    while not (abs(R - t) < eps).all():
+        print(times)
+        times += 1
+        t = R
+        R = Rmul(t)
     return R
 
 def get_range(R):
     '''根据模糊等价矩阵中的隶属度，确定一系列用以分类的lamda。'''
     res = []
-    getRound = lambda x: round(x, 2)
+    eps = 1e-5
     for i in R:
-        res.extend(getRound(x) for x in i)
-    return sorted(list(set(res)))
+        res.extend(x for x in i)
+    res.sort()
+    i = 0
+    while i < len(res) - 1:
+        if res[i + 1] - res[i] < eps:
+            res.pop(i + 1)
+        else:
+            i += 1
+    return res
 
 def get_truncation_matrix(R, lam):
     '''
@@ -88,15 +107,33 @@ def putMat(R):
         print(i)
     print()
 
+def putRes(res):
+    '''美化结果的输出，方便复制粘贴'''
+    for i in range(len(res)):
+        t = []
+        for j in res[i] :
+            t.append(int(j[:-4]))
+        t.sort();
+        print('{', end = '')
+        for j in range(len(t)):
+            if j == len(t) - 1:
+                print(t[j], end = '}')
+                if i != len(res) - 1:
+                    print(', ', end = '')
+                break
+            print(t[j], end = ', ')
+    print('\n')
+    
+
 if __name__=="__main__":
-    file_dir = "D:\\Course\\XDU_Mathmatical_Modeling\\Fuzzy Mathematics\\fuzzy_mathematics_homework\\data\\3"
+    file_dir = "D:\\Course\\XDU_Mathmatical_Modeling\\Fuzzy Mathematics\\fuzzy_mathematics_homework\\data\\1"
 
     files = get_img(file_dir)
     feature = get_feature(files)
                 
     n = len(feature)    # 高，Height of feature
     m = len(feature[0]) # 宽，Width of feature
-    M = 80              # 绝对值倒数法的系数，Coefficients of the Reciprocal Absolute Value Method
+    M = 70              # 绝对值倒数法的系数，Coefficients of the Reciprocal Absolute Value Method
 
     r = get_sMat(feature)# 相似矩阵，Similarity matrix
 
@@ -112,8 +149,9 @@ if __name__=="__main__":
 
     for lam in ran:
         tMat= get_truncation_matrix(R, lam)
-        print(str(lam) + " 对应的截断矩阵为：")
-        putMat(tMat)
-        print(str(lam) + " 对应的分类为:")
+        # print(str(lam) + " 对应的截断矩阵为：")
+        # putMat(tMat)
+        
         res = get_class(tMat)
-        putMat(res)
+        print("当 λ 的取值为 %.5f 时，U 分为 %d 类：" % (lam, len(res)))
+        putRes(res)
